@@ -1,10 +1,34 @@
-﻿namespace Product
+﻿using System;
+using System.Collections.Generic;
+using Product.Models;
+
+namespace Product
 {
     public class ProductService
     {
-        internal int TotalGroupAmount(string groupColumnName, int groupRange)
+        private readonly ProductRepository _ProductRepository;
+
+        public ProductService()
         {
-            throw new System.NotImplementedException();
+            _ProductRepository = new ProductRepository();
+        }
+
+        public ProductService(ProductRepository productRepository)
+        {
+            _ProductRepository = productRepository;
+        }
+
+        internal List<ProductItem> SumGroupAmount(string groupColumnName, int groupRange)
+        {
+            return _ProductRepository.SumProductStoreProcedure(groupColumnName, groupRange);
+        }
+    }
+
+    public class ProductRepository
+    {
+        virtual internal List<ProductItem> SumProductStoreProcedure(string column, int range)
+        {
+            throw new NotImplementedException();
         }
     }
 }
