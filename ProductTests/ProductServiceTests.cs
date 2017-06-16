@@ -2,42 +2,18 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Product;
-using Product.Models;
 
 namespace ProductTests
 {
     [TestClass]
     public class ProductServiceTests
     {
-        private static readonly List<ProductItem> _ProductList = new List<ProductItem>
-        {
-            new ProductItem {Id = 1, Cost = 1, Revenue = 11, SellPrice = 21},
-            new ProductItem {Id = 2, Cost = 2, Revenue = 12, SellPrice = 22},
-            new ProductItem {Id = 3, Cost = 3, Revenue = 13, SellPrice = 23},
-            new ProductItem {Id = 4, Cost = 4, Revenue = 14, SellPrice = 24},
-            new ProductItem {Id = 5, Cost = 5, Revenue = 15, SellPrice = 25},
-            new ProductItem {Id = 6, Cost = 6, Revenue = 16, SellPrice = 26},
-            new ProductItem {Id = 7, Cost = 7, Revenue = 17, SellPrice = 27},
-            new ProductItem {Id = 8, Cost = 8, Revenue = 18, SellPrice = 28},
-            new ProductItem {Id = 9, Cost = 9, Revenue = 19, SellPrice = 29},
-            new ProductItem {Id = 10, Cost = 10, Revenue = 20, SellPrice = 30},
-            new ProductItem {Id = 11, Cost = 11, Revenue = 21, SellPrice = 31}
-        };
-
-        private class FackRepository : ProductRepository
-        {
-            internal override List<ProductItem> SumProductStoreProcedure(string column, int range)
-            {
-                return _ProductList;
-            }
-        }
-
         private ProductService _Target;
 
         [TestInitialize]
         public void SetUp()
         {
-            _Target = new ProductService( new FackRepository());
+            _Target = new ProductService(new StubRepository());
         }
 
         [TestMethod]
@@ -101,5 +77,28 @@ namespace ProductTests
             _Target.SumGroupAmount("NoThisColumn", 3);
         }
 
+    }
+
+    public class StubRepository : IProduct
+    {
+        private List<Product.Models.Product> _Products = new List<Product.Models.Product>
+        {
+            new Product.Models.Product {Id = 1, Cost = 1, Revenue = 11, SellPrice = 21},
+            new Product.Models.Product {Id = 2, Cost = 2, Revenue = 12, SellPrice = 22},
+            new Product.Models.Product {Id = 3, Cost = 3, Revenue = 13, SellPrice = 23},
+            new Product.Models.Product {Id = 4, Cost = 4, Revenue = 14, SellPrice = 24},
+            new Product.Models.Product {Id = 5, Cost = 5, Revenue = 15, SellPrice = 25},
+            new Product.Models.Product {Id = 6, Cost = 6, Revenue = 16, SellPrice = 26},
+            new Product.Models.Product {Id = 7, Cost = 7, Revenue = 17, SellPrice = 27},
+            new Product.Models.Product {Id = 8, Cost = 8, Revenue = 18, SellPrice = 28},
+            new Product.Models.Product {Id = 9, Cost = 9, Revenue = 19, SellPrice = 29},
+            new Product.Models.Product {Id = 10, Cost = 10, Revenue = 20, SellPrice = 30},
+            new Product.Models.Product {Id = 11, Cost = 11, Revenue = 21, SellPrice = 31}
+        };
+
+        public List<Product.Models.Product> SumProductGroup(string column, int size)
+        {
+            return _Products;
+        }
     }
 }

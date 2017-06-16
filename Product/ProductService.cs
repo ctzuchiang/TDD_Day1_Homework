@@ -6,27 +6,32 @@ namespace Product
 {
     public class ProductService
     {
-        private readonly ProductRepository _ProductRepository;
+        private readonly IProduct _ProductRepository;
 
         public ProductService()
         {
             _ProductRepository = new ProductRepository();
         }
 
-        public ProductService(ProductRepository productRepository)
+        public ProductService(IProduct productRepository)
         {
             _ProductRepository = productRepository;
         }
 
-        internal List<ProductItem> SumGroupAmount(string groupColumnName, int groupRange)
+        internal List<Models.Product> SumGroupAmount(string groupColumnName, int groupSize)
         {
-            return _ProductRepository.SumProductStoreProcedure(groupColumnName, groupRange);
+            return _ProductRepository.SumProductGroup(groupColumnName, groupSize);
         }
     }
 
-    public class ProductRepository
+    public interface IProduct
     {
-        virtual internal List<ProductItem> SumProductStoreProcedure(string column, int range)
+        List<Models.Product> SumProductGroup(string column, int size);
+    }
+
+    public class ProductRepository : IProduct
+    {
+        public List<Models.Product> SumProductGroup(string column, int size)
         {
             throw new NotImplementedException();
         }

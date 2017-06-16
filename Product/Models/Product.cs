@@ -1,6 +1,6 @@
 ﻿namespace Product.Models
 {
-    internal class ProductItem
+    public class Product
     {
         internal int Id { get; set; }
         internal int Cost { get; set; }
