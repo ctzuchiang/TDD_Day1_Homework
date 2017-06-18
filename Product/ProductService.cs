@@ -16,6 +16,9 @@ namespace Product
         /// <returns></returns>
         public static IEnumerable<int> SumGroupSize<TSource>(this IEnumerable<TSource> source, int groupSize, Func<TSource, int> groupName)
         {
+            if(groupSize < 1)
+                throw new ArgumentException();
+
             var index = 0;
             while (index <= source.Count())
             {

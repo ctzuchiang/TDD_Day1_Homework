@@ -1,7 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Product;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 
 namespace ProductTests
 {
@@ -30,7 +32,7 @@ namespace ProductTests
         }
 
         [TestMethod]
-        public void SumGroupAmount_by_Cost_with_groupRange_3()
+        public void SumGroupSize_by_Cost_with_groupRange_3()
         {
             var expected = new[] { 6, 15, 24, 21 };
 
@@ -40,7 +42,7 @@ namespace ProductTests
         }
 
         [TestMethod]
-        public void SumGroupAmount_by_Cost_with_groupRange_4()
+        public void SumGroupSize_by_Cost_with_groupRange_4()
         {
             var expected = new[] { 10, 26, 30 };
 
@@ -50,7 +52,7 @@ namespace ProductTests
         }
 
         [TestMethod]
-        public void SumGroupAmount_by_Revenue_with_groupRange_3()
+        public void SumGroupSize_by_Revenue_with_groupRange_3()
         {
             var expected = new[] { 36, 45, 54, 41 };
 
@@ -60,7 +62,7 @@ namespace ProductTests
         }
 
         [TestMethod]
-        public void SumGroupAmount_by_Revenue_with_groupRange_4()
+        public void SumGroupSize_by_Revenue_with_groupRange_4()
         {
             var expected = new[] { 50, 66, 60 };
 
@@ -69,26 +71,19 @@ namespace ProductTests
             CollectionAssert.AreEqual(expected, actual);
         }
 
-        //}
-        //    _Target.SumGroupAmount("Revenue", 0);
-        //{
-        //public void SumGroupAmount_with_0_groupRange_should_throw_ArgumentException()
-        //[TestMethod]
+        [TestMethod]
+        public void SumGroupSize_with_0_groupRange_should_throw_ArgumentException()
+        {
+            Action act = () => _Product.SumGroupSize(0, x => x.Revenue);
+            act.ShouldThrow<ArgumentException>();
+        }
 
-        //[ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        public void SumGroupSize_with_negative_groupRange_should_throw_ArgumentException()
+        {
+            Action act = () => _Product.SumGroupSize(-1, x => x.Revenue);
+            act.ShouldThrow<ArgumentException>();
+        }
 
-        //[ExpectedException(typeof(ArgumentException))]
-        //[TestMethod]
-        //public void SumGroupAmount_with_negative_groupRange_should_throw_ArgumentException()
-        //{
-        //    _Target.SumGroupAmount("Revenue", -1);
-        //}
-
-        //[ExpectedException(typeof(ArgumentException))]
-        //[TestMethod]
-        //public void SumGroupAmount_with_notExisted_column_should_throw_ArgumentException()
-        //{
-        //    _Target.SumGroupAmount("NoThisColumn", 3);
-        //}
     }
 }
