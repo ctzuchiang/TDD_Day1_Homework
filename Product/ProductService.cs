@@ -1,39 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using Product.Models;
+using System.Linq;
 
 namespace Product
 {
-    public class ProductService
+    public static class ProductService
     {
-        private readonly IProduct _ProductRepository;
-
-        public ProductService()
+        /// <summary>
+        /// Sums the size of the group.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source.</typeparam>
+        /// <param name="source">The source.</param>
+        /// <param name="groupSize">Size of the group.</param>
+        /// <param name="groupName">Name of the group.</param>
+        /// <returns></returns>
+        public static IEnumerable<int> SumGroupSize<TSource>(this IEnumerable<TSource> source, int groupSize, Func<TSource, int> groupName)
         {
-            _ProductRepository = new ProductRepository();
-        }
-
-        public ProductService(IProduct productRepository)
-        {
-            _ProductRepository = productRepository;
-        }
-
-        internal List<Models.Product> SumGroupAmount(string groupColumnName, int groupSize)
-        {
-            return _ProductRepository.SumProductGroup(groupColumnName, groupSize);
+            var index = 0;
+            while (index <= source.Count())
+            {
+                yield return source.Skip(index).Take(groupSize).Sum(groupName);
+                index += groupSize;
+            }
         }
     }
 
-    public interface IProduct
+    public class ProductModel
     {
-        List<Models.Product> SumProductGroup(string column, int size);
-    }
-
-    public class ProductRepository : IProduct
-    {
-        public List<Models.Product> SumProductGroup(string column, int size)
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
+        internal int Id { get; set; }
+        internal int Cost { get; set; }
+        internal int Revenue { get; set; }
+        internal int SellPrice { get; set; }
     }
 }
