@@ -32,7 +32,7 @@ namespace ProductTests
         }
 
         [TestMethod]
-        public void SumGroupSize_by_Cost_with_groupRange_3()
+        public void SumGroupSize_by_Cost_with_groupSize_3()
         {
             var expected = new[] { 6, 15, 24, 21 };
 
@@ -42,7 +42,7 @@ namespace ProductTests
         }
 
         [TestMethod]
-        public void SumGroupSize_by_Cost_with_groupRange_4()
+        public void SumGroupSize_by_Cost_with_groupSize_4()
         {
             var expected = new[] { 10, 26, 30 };
 
@@ -52,7 +52,7 @@ namespace ProductTests
         }
 
         [TestMethod]
-        public void SumGroupSize_by_Revenue_with_groupRange_3()
+        public void SumGroupSize_by_Revenue_with_groupSize_3()
         {
             var expected = new[] { 36, 45, 54, 41 };
 
@@ -62,7 +62,7 @@ namespace ProductTests
         }
 
         [TestMethod]
-        public void SumGroupSize_by_Revenue_with_groupRange_4()
+        public void SumGroupSize_by_Revenue_with_groupSize_4()
         {
             var expected = new[] { 50, 66, 60 };
 
@@ -72,16 +72,16 @@ namespace ProductTests
         }
 
         [TestMethod]
-        public void SumGroupSize_with_0_groupRange_should_throw_ArgumentException()
+        public void SumGroupSize_with_0_groupSize_should_throw_ArgumentException()
         {
-            Action act = () => _Product.SumGroupSize(0, x => x.Revenue);
+            Action act = () => _Product.SumGroupSize(0, x => x.Revenue).ToArray();
             act.ShouldThrow<ArgumentException>();
         }
 
         [TestMethod]
-        public void SumGroupSize_with_negative_groupRange_should_throw_ArgumentException()
+        public void SumGroupSize_with_negative_groupSize_should_throw_ArgumentException()
         {
-            Action act = () => _Product.SumGroupSize(-1, x => x.Revenue);
+            Action act = () => _Product.SumGroupSize(-1, x => x.Revenue).ToArray();
             act.ShouldThrow<ArgumentException>();
         }
 
